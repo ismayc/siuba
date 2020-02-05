@@ -160,22 +160,27 @@ Out[4]:
 
 See [querying SQL introduction here](https://siuba.readthedocs.io/en/latest/intro_sql_basic.html).
 
-### Example notebooks
+## Comparing `siuba` and `pandas` code
 
-Below are some examples I've kept as I've worked on siuba.
-For the most up to date explanations, see the [siuba docs](https://siuba.readthedocs.io)
+In the code below, 
 
-* [siu expressions](examples/examples-siu.ipynb)
-* [dplyr style pandas](examples/examples-dplyr-funcs.ipynb)
-  - [select verb case study](examples/case-iris-select.ipynb)
-* sql using dplyr style
-  - [simple sql statements](examples/examples-sql.ipynb)
-  - [the kitchen sink with postgres](examples/examples-postgres.ipynb)
-* [tidytuesday examples](https://github.com/machow/tidytuesday-py)
-  - tidytuesday is a weekly R data analysis project. In order to kick the tires
-    on siuba, I've been using it to complete the assignments. More specifically,
-    I've been porting Dave Robinson's [tidytuesday analyses](https://github.com/dgrtwo/data-screencasts)
-    to use siuba.
+```python
+import pandas as pd
+
+from siuba import _, group_by, summarize
+from siuba.experimental.pd_groups import fast_filter
+
+from siuba.data import mtcars
+
+g_cyl = mtcars.groupby('cyl')
+```
+
+| action | siuba | pandas |
+| ------ | ----- | ------ |
+| named agg | <pre lang="python">summarize(g_cyl, avg_hp = _.hp.mean())</pre> | <pre lang="python">g_cyl.agg(avg_hp = pd.NamedAgg("hp", "mean"))</pre>|
+| subtract mean from hp | <pre lang="python">mutate(g_cyl, hp2 = _.hp - _.hp.mean())</pre> | <pre>mtcars.assign(<br>  hp2 = mtcars.hp - g_cyl.hp.transform("mean")<br>)</pre> |
+| keep lowest mpg rows | <pre lang="python">filter(g_cyl, _.mpg == _.mpg.min())</pre> | <pre lang="python">mtcars[mtcars.mpg == g_cyl.mpg.transform('min')]</pre> |
+
 
 Testing
 -------
