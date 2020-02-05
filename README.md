@@ -187,16 +187,14 @@ g_cyl = mtcars.groupby('cyl')
 summarize(g_cyl,
   avg_hp = _.hp.mean(),
   avg_mpg = _.mpg.mean()
-)
-      </pre>
+)</pre>
     </td>
     <td>
       <pre lang="python">
 g_cyl.agg(
   avg_hp = pd.NamedAgg("hp", "mean"),
   avg_mpg = pd.NamedAgg("mpg", "mean")
-).reset_index()
-      </pre>
+).reset_index()</pre>
     </td>
   </tr>
   <!-- Output -->
@@ -215,14 +213,12 @@ g_cyl.agg(
       <pre lang="python">
 summarize(g_cyl,
   ttl = _.hp.notna().sum()
-)
-      </pre>
+)</pre>
     </td>
     <td>
       <pre lang="python">
 mtcars.hp.notna().groupby("cyl").sum() \
-  .reset_index(name = "ttl")
-      </pre>
+  .reset_index(name = "ttl")</pre>
     </td>
   </tr>
   <!-- Output -->
@@ -241,15 +237,13 @@ mtcars.hp.notna().groupby("cyl").sum() \
       <pre lang="python">
 mutate(g_cyl,
   hp2 = _.hp - _.hp.mean()
-)
-      </pre>
+)</pre>
     </td>
     <td>
       <pre lang="pyton">
 mtcars.assign(
   hp2 = mtcars.hp - g_cyl.hp.transform("mean")
-)
-      </pre>
+)</pre>
     </td>
   </tr>
   <!-- Output -->
@@ -266,13 +260,11 @@ mtcars.assign(
     <td>keep lowest mpg rows</td>
     <td>
       <pre lang="python">
-filter(g_cyl, _.mpg == _.mpg.min())
-      </pre>
+filter(g_cyl, _.mpg == _.mpg.min())</pre>
     </td>
     <td>
       <pre lang="python">
-mtcars[mtcars.mpg == g_cyl.mpg.transform('min')]
-      </pre>
+mtcars[mtcars.mpg == g_cyl.mpg.transform('min')]</pre>
     </td>
   </tr>
   <!-- Output -->
