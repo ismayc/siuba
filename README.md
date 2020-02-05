@@ -176,11 +176,13 @@ g_cyl = mtcars.groupby('cyl')
 ```
 
 <table>
-  <tr>
-    <th>group action</th>
-    <th>siuba</th>
-    <th>pandas</th>
-  </tr>
+  <thead>
+    <tr>
+      <th>group action</th>
+      <th>siuba</th>
+      <th>pandas</th>
+    </tr>
+  </thead>
   <tr>
     <td>named aggs</td>
     <td>
