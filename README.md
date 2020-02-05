@@ -174,7 +174,6 @@ from siuba.data import mtcars
 g_cyl = mtcars.groupby('cyl')
 ```
 
-<sub>
 <table>
   <tr>
     <th>group action</th>
@@ -278,7 +277,6 @@ mtcars[mtcars.mpg == g_cyl.mpg.transform('min')]</pre>
     </td>
   </tr>
 </table>
-</sub>
 
 
 Testing
