@@ -184,7 +184,7 @@ g_cyl = mtcars.groupby('cyl')
   <tr>
     <td>named aggs</td>
     <td>
-      <pre lang="pyton">
+      <pre lang="python">
 summarize(g_cyl,
   avg_hp = _.hp.mean(),
   avg_mpg = _.mpg.mean()
