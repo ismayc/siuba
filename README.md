@@ -184,7 +184,7 @@ g_cyl = mtcars.groupby('cyl')
   <tr>
     <td>named aggs</td>
     <td>
-      <pre>
+      <pre lang="pyton">
 summarize(g_cyl,
   avg_hp = _.hp.mean(),
   avg_mpg = _.mpg.mean()
@@ -192,7 +192,7 @@ summarize(g_cyl,
       </pre>
     </td>
     <td>
-      <pre>
+      <pre lang="python">
 g_cyl.agg(
   avg_hp = pd.NamedAgg("hp", "mean"),
   avg_mpg = pd.NamedAgg("mpg", "mean")
@@ -213,14 +213,14 @@ g_cyl.agg(
   <tr>
     <td>agg expression</td>
     <td>
-      <pre>
+      <pre lang="python">
 summarize(g_cyl,
   ttl = _.hp.notna().sum()
 )
       </pre>
     </td>
     <td>
-      <pre>
+      <pre lang="python">
 mtcars.hp.notna().groupby("cyl").sum() \
   .reset_index(name = "ttl")
       </pre>
@@ -239,14 +239,14 @@ mtcars.hp.notna().groupby("cyl").sum() \
   <tr>
     <td>subtract mean from hp</td>
     <td>
-      <pre>
+      <pre lang="python">
 mutate(g_cyl,
   hp2 = _.hp - _.hp.mean()
 )
       </pre>
     </td>
     <td>
-      <pre>
+      <pre lang="pyton">
 mtcars.assign(
   hp2 = mtcars.hp - g_cyl.hp.transform("mean")
 )
