@@ -176,13 +176,11 @@ g_cyl = mtcars.groupby('cyl')
 ```
 
 <table>
-  <thead>
-    <tr>
-      <th>group action</th>
-      <th>siuba</th>
-      <th>pandas</th>
-    </tr>
-  </thead>
+  <tr>
+    <th>group action</th>
+    <th>siuba</th>
+    <th>pandas</th>
+  </tr>
   <tr>
     <td>named aggs</td>
     <td>
@@ -233,7 +231,7 @@ mtcars.hp.notna().groupby("cyl").sum() \
     <td></td>
     <td colspan="2">
       <!-- DataFrame -->
-      <table border="1" class="dataframe">  <thead>    <tr style="text-align: right;">      <th></th>      <th>cyl</th>      <th>ttl</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>4</td>      <td>11</td>    </tr>    <tr>      <th>1</th>      <td>6</td>      <td>7</td>    </tr>    <tr>      <th>2</th>      <td>8</td>      <td>14</td>    </tr>  </tbody></table>
+      <table class="dataframe">  <thead>    <tr style="text-align: right;">      <th></th>      <th>cyl</th>      <th>ttl</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>4</td>      <td>11</td>    </tr>    <tr>      <th>1</th>      <td>6</td>      <td>7</td>    </tr>    <tr>      <th>2</th>      <td>8</td>      <td>14</td>    </tr>  </tbody></table>
       <!-- /end -->
     </td>
   </tr>
@@ -260,7 +258,7 @@ mtcars.assign(
     <td></td>
     <td colspan="2">
       <!-- DataFrame -->
-      <table border="1" class="dataframe">  <thead>    <tr style="text-align: right;">      <th></th>      <th>cyl</th>      <th>mpg</th>      <th>hp</th>      <th>hp2</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>6</td>      <td>21.0</td>      <td>110</td>      <td>-12.285714</td>    </tr>    <tr>      <th>1</th>      <td>6</td>      <td>21.0</td>      <td>110</td>      <td>-12.285714</td>    </tr>    <tr>      <th>...</th>      <td>...</td>      <td>...</td>      <td>...</td>      <td>...</td>    </tr>    <tr>      <th>30</th>      <td>8</td>      <td>15.0</td>      <td>335</td>      <td>125.785714</td>    </tr>    <tr>      <th>31</th>      <td>4</td>      <td>21.4</td>      <td>109</td>      <td>26.363636</td>    </tr>  </tbody></table>
+      <table class="dataframe">  <thead>    <tr style="text-align: right;">      <th></th>      <th>cyl</th>      <th>mpg</th>      <th>hp</th>      <th>hp2</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>6</td>      <td>21.0</td>      <td>110</td>      <td>-12.285714</td>    </tr>    <tr>      <th>1</th>      <td>6</td>      <td>21.0</td>      <td>110</td>      <td>-12.285714</td>    </tr>    <tr>      <th>...</th>      <td>...</td>      <td>...</td>      <td>...</td>      <td>...</td>    </tr>    <tr>      <th>30</th>      <td>8</td>      <td>15.0</td>      <td>335</td>      <td>125.785714</td>    </tr>    <tr>      <th>31</th>      <td>4</td>      <td>21.4</td>      <td>109</td>      <td>26.363636</td>    </tr>  </tbody></table>
       <!-- /end -->
     </td>
   </tr>
@@ -283,7 +281,7 @@ mtcars[mtcars.mpg == g_cyl.mpg.transform('min')]
     <td></td>
     <td colspan="2">
       <!-- DataFrame -->
-      <table border="1" class="dataframe">  <thead>    <tr style="text-align: right;">      <th></th>      <th>cyl</th>      <th>mpg</th>      <th>hp</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>6</td>      <td>17.8</td>      <td>123</td>    </tr>    <tr>      <th>1</th>      <td>8</td>      <td>10.4</td>      <td>205</td>    </tr>    <tr>      <th>2</th>      <td>8</td>      <td>10.4</td>      <td>215</td>    </tr>    <tr>      <th>3</th>      <td>4</td>      <td>21.4</td>      <td>109</td>    </tr>  </tbody></table>
+      <table class="dataframe">  <thead>    <tr style="text-align: right;">      <th></th>      <th>cyl</th>      <th>mpg</th>      <th>hp</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>6</td>      <td>17.8</td>      <td>123</td>    </tr>    <tr>      <th>1</th>      <td>8</td>      <td>10.4</td>      <td>205</td>    </tr>    <tr>      <th>2</th>      <td>8</td>      <td>10.4</td>      <td>215</td>    </tr>    <tr>      <th>3</th>      <td>4</td>      <td>21.4</td>      <td>109</td>    </tr>  </tbody></table>
       <!-- /end -->
     </td>
   </tr>
