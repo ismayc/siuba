@@ -167,8 +167,7 @@ In the code below,
 ```python
 import pandas as pd
 
-from siuba import _, group_by, summarize
-from siuba.experimental.pd_groups import fast_filter
+from siuba import _, summarize, filter, mutate
 
 from siuba.data import mtcars
 
