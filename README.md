@@ -175,7 +175,7 @@ from siuba.data import mtcars
 g_cyl = mtcars.groupby('cyl')
 ```
 
-| action | siuba | pandas |
+| group action | siuba | pandas |
 | ------ | ----- | ------ |
 | named aggs | <pre>summarize(g_cyl,<br>  avg_hp = _.hp.mean(),<br>  avg_mpg = _.mpg.mean()<br>)</pre> | <pre>g_cyl.agg(<br>  avg_hp = pd.NamedAgg("hp", "mean"),<br>  avg_mpg = pd.NamedAgg("mpg", "mean")<br>).reset_index()</pre>|
 | named agg expression | <pre lang="python">summarize(g_cyl, ttl = _.hp.notna().sum())</pre> | <pre>mtcars.hp.notna().groupby("cyl").sum() \ <br>  .reset_index(name = "ttl")<br><br># or<br>ttl_vals = g_cyl.size() - g_cyl.hp.count() <br>ttl_vals.reset_index(name = "ttl")</pre> |
