@@ -175,12 +175,78 @@ from siuba.data import mtcars
 g_cyl = mtcars.groupby('cyl')
 ```
 
-| group action | siuba | pandas |
-| ------ | ----- | ------ |
-| named aggs | <pre>summarize(g_cyl,<br>  avg_hp = _.hp.mean(),<br>  avg_mpg = _.mpg.mean()<br>)</pre> | <pre>g_cyl.agg(<br>  avg_hp = pd.NamedAgg("hp", "mean"),<br>  avg_mpg = pd.NamedAgg("mpg", "mean")<br>).reset_index()</pre>|
-| agg expression | <pre>summarize(g_cyl,<br>  ttl = _.hp.notna().sum()<br>)</pre> | <pre>mtcars.hp.notna().groupby("cyl").sum() \ <br>  .reset_index(name = "ttl") |
-| subtract mean from hp | <pre>mutate(g_cyl,<br>  hp2 = _.hp - _.hp.mean()<br>)</pre> | <pre>mtcars.assign(<br>  hp2 = mtcars.hp - g_cyl.hp.transform("mean")<br>)</pre> |
-| keep lowest mpg rows | <pre lang="python">filter(g_cyl, _.mpg == _.mpg.min())</pre> | <pre lang="python">mtcars[mtcars.mpg == g_cyl.mpg.transform('min')]</pre> |
+<table>
+  <tr>
+    <th>group action</th>
+    <th>siuba</th>
+    <th>pandas</th>
+  </tr>
+  <tr>
+    <td>named aggs</td>
+    <td>
+      <pre>
+summarize(g_cyl,
+  avg_hp = _.hp.mean(),
+  avg_mpg = _.mpg.mean()
+)
+      </pre>
+    </td>
+    <td>
+      <pre>
+g_cyl.agg(
+  avg_hp = pd.NamedAgg("hp", "mean"),
+  avg_mpg = pd.NamedAgg("mpg", "mean")
+).reset_index()
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>agg expression</td>
+    <td>
+      <pre>
+summarize(g_cyl,
+  ttl = _.hp.notna().sum()
+)
+      </pre>
+    </td>
+    <td>
+      <pre>
+mtcars.hp.notna().groupby("cyl").sum() \
+  .reset_index(name = "ttl")
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>subtract mean from hp</td>
+    <td>
+      <pre>
+mutate(g_cyl,
+  hp2 = _.hp - _.hp.mean()
+)
+      </pre>
+    </td>
+    <td>
+      <pre>
+mtcars.assign(
+  hp2 = mtcars.hp - g_cyl.hp.transform("mean")
+)
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>keep lowest mpg rows</td>
+    <td>
+      <pre lang="python">
+filter(g_cyl, _.mpg == _.mpg.min())
+      </pre>
+    </td>
+    <td>
+      <pre lang="python">
+mtcars[mtcars.mpg == g_cyl.mpg.transform('min')]
+      </pre>
+    </td>
+  </tr>
+</table>
 
 
 Testing
