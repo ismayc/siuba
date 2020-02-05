@@ -177,8 +177,8 @@ g_cyl = mtcars.groupby('cyl')
 
 | action | siuba | pandas |
 | ------ | ----- | ------ |
-| named agg | <pre lang="python">summarize(g_cyl, avg_hp = _.hp.mean())</pre> | <pre>g_cyl.agg(avg_hp = pd.NamedAgg("hp", "mean")) \<br>  .reset_index()</pre>|
-| named agg 2 | <pre lang="python">summarize(g_cyl, ttl = _.hp.notna().sum())</pre> | <pre>mtcars.hp.notna().groupby("cyl").sum() \ <br>  .reset_index()<br># or<br>(g_cyl.size() - g_cyl.hp.count()).reset_index()</pre> |
+| named agg | <pre lang="python">summarize(g_cyl, avg_hp = _.hp.mean())</pre> | <pre>g_cyl.agg(avg_hp = pd.NamedAgg("hp", "mean")) \ <br>  .reset_index()</pre>|
+| named agg 2 | <pre lang="python">summarize(g_cyl, ttl = _.hp.notna().sum())</pre> | <pre>mtcars.hp.notna().groupby("cyl").sum() \ <br>  .reset_index()<br># or<br>(g_cyl.size() - g_cyl.hp.count()) \ <br>  .reset_index()</pre> |
 | subtract mean from hp | <pre lang="python">mutate(g_cyl, hp2 = _.hp - _.hp.mean())</pre> | <pre>mtcars.assign(<br>  hp2 = mtcars.hp - g_cyl.hp.transform("mean")<br>)</pre> |
 | keep lowest mpg rows | <pre lang="python">filter(g_cyl, _.mpg == _.mpg.min())</pre> | <pre lang="python">mtcars[mtcars.mpg == g_cyl.mpg.transform('min')]</pre> |
 
