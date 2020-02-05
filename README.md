@@ -179,7 +179,7 @@ g_cyl = mtcars.groupby('cyl')
 | ------ | ----- | ------ |
 | named aggs | <pre>summarize(g_cyl,<br>  avg_hp = _.hp.mean(),<br>  avg_mpg = _.mpg.mean()<br>)</pre> | <pre>g_cyl.agg(<br>  avg_hp = pd.NamedAgg("hp", "mean"),<br>  avg_mpg = pd.NamedAgg("mpg", "mean")<br>).reset_index()</pre>|
 | named agg expression | <pre>summarize(g_cyl,<br>  ttl = _.hp.notna().sum()<br>)</pre> | <pre>mtcars.hp.notna().groupby("cyl").sum() \ <br>  .reset_index(name = "ttl")<br><br># or<br>ttl_vals = g_cyl.size() - g_cyl.hp.count() <br>ttl_vals.reset_index(name = "ttl")</pre> |
-| subtract mean from hp | <pre lang="python">mutate(g_cyl, hp2 = _.hp - _.hp.mean())</pre> | <pre>mtcars.assign(<br>  hp2 = mtcars.hp - g_cyl.hp.transform("mean")<br>)</pre> |
+| subtract mean from hp | <pre>mutate(g_cyl,<br>  hp2 = _.hp - _.hp.mean()<br>)</pre> | <pre>mtcars.assign(<br>  hp2 = mtcars.hp - g_cyl.hp.transform("mean")<br>)</pre> |
 | keep lowest mpg rows | <pre lang="python">filter(g_cyl, _.mpg == _.mpg.min())</pre> | <pre lang="python">mtcars[mtcars.mpg == g_cyl.mpg.transform('min')]</pre> |
 
 
