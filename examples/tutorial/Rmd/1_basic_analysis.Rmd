@@ -1,0 +1,355 @@
+---
+title: "basic analysis"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+jupyter:
+  jupytext:
+    cell_metadata_filter: name,tags,-all
+    formats: Rmd//Rmd,ipynb
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.4.1
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+# Introduction to Data Analysis with Siuba: Basics
+
+TODO:
+
+* arguments separated by commas
+* some about functions explained
+
+**Pre-requisite concepts**
+
+* how to run code
+* comments
+* changing contents of a string
+
+**All concepts**
+
+Identifying
+
+* variable
+* DataFrame output
+* plotting code
+
+Constructing
+
+* comment
+* string
+* siu expression, verb, pipe
+* arrange, filter, mutate, select
+
+
+```{python setup, include=FALSE}
+# TODO: explain how to run this, and that they only need the gist (loads tools)
+import pandas as pd
+from siuba import arrange, select, mutate, filter, _
+from plotnine import ggplot, geom_point, coord_flip, aes, labs
+
+# temporary until I figure out where to put data
+url = "https://siublocks.s3.us-east-2.amazonaws.com/music_top200.csv"
+music_top200 = pd.read_csv(url)
+
+
+# TODO: shift into a package or file
+from siuba import pipe
+from IPython.display import HTML, display
+___ = pipe(lambda x: display(HTML("⚠️: <b>Don't forget to replace all the blanks!<b>")) and _)
+
+pd.set_option("display.max_rows", 6)
+
+```
+
+<!-- #region -->
+
+
+## Introduction to Spotify data
+
+* concept of a variable - 
+* this is a DataFrame
+* number of rows and columns
+
+The data we'll use is held in a **DataFrame**. A DataFrame is a big table of data, made up of rows and columns. In the example below, the **variable** `music_top200` let's us refer to and work on the data.
+
+Notice that in the bottom-left of the table, it shows the number of rows and columns. This data has 12,417 rows and 22 columns.
+
+<!-- #endregion -->
+
+```{python}
+music_top200
+```
+
+> 🔎 How many streams did the track named Blinding lights get this week?
+
+> 🔎 How many rows in the 12,417 row DataFrame are being shown above?
+
+> 🔎 What is the speechiness level of the track named Myron?
+
+<details>
+    <summary>show answers</summary>
+
+    * Blinding lights was streamed 7744570 times.
+    * 10 rows are being shown from the DataFrame
+    * The track named Myron has a speechiness of 0.29
+</details>
+    
+
+
+## What you'll learn to do
+
+Key concepts:
+  * changing column names
+  * string syntax
+  * commenting code
+
+The next two examples show what you'll be able to do by the end of this chapter.
+It's okay if the code doesn't make sense yet.
+Just being able to run someone else's code goes a long way!
+
+
+
+### Big example 1: finding high energy hits
+
+Run the code below. It should do the following:
+
+* **arrange** the rows--first by position (lowest first), and second by energy (highest first).
+* **select** specific columns, such as country, position, and artist.
+
+```{python}
+(music_top200
+  >> arrange(_.position, -_.energy)
+  >> select(_.country, _.position, _.artist, _.track_name, _.energy)
+)
+```
+
+Try doing the actions below, and then running the code.
+
+> 🔨 Try changing the two uses of `_.energy` above to `_.danciness`.
+
+
+### Big example 2: which countries does an artist have hits in?
+
+Run the code below. It should do the following:
+
+* **filter** to keep rows for the artist ITZY
+* use **ggplot** to add a point for each row in the filtered data.
+
+```{python}
+(music_top200
+  >> filter(_.artist == "ITZY")
+  >> ggplot(aes("streams", "country")) + geom_point() + labs(title = "ITZY hits across countries")
+)
+```
+
+
+> 🔨 Try changing the term `"ITZY"` to `"TIX"`. How many countries have TIX hits?
+
+> 🔨 Try stopping the plot with a comment. That is, put `#` to the left of `>> ggplot`. This should show you the raw data.
+
+<details>
+    <summary>solution</summary>
+
+Here is the solution code...
+    
+```python
+# code with artist changed, and plot commented out
+(music_top200
+  >> filter(_.artist == "TIX")
+  #>> ggplot(aes("streams", "country")) + geom_point() + labs(title = "ITZY hits across countries")
+)
+```
+
+</details>
+
+
+## Arrange
+
+TODO: fill in explanation
+
+```{python}
+(music_top200
+  >> arrange(_.position, -_.danceability)
+)
+```
+
+### Exercise 1: 
+
+Below is code with the arrange verb removed. Modify it to arrange by artist name and popularity.
+
+```{python}
+(music_top200
+  >> ___
+)
+```
+
+### Exercise 2:
+
+Modify the code below to arrange by artist name in **descending** order. What is the track name of the `*NSYNC` song shown in the data?
+
+```{python}
+(music_top200
+
+)
+```
+
+<details>
+    <summary>solution</summary>
+
+```python
+(music_top200
+  >> arrange(-_.artist)
+)
+```
+
+</details>
+
+
+## Select
+
+TODO: fill in explanation
+
+```{python}
+(music_top200
+  >> select(_.country, _.position, _.track_name, _.artist, _.energy)
+)
+```
+
+### Exercise 1: removing country_code 
+
+Make a small change the `select` below to remove the column `country_code` from the data, rather than include it.
+
+```{python}
+(music_top200
+  >> select(_.country_code)
+)
+```
+
+### Exercise 2: arrange and select
+
+Modify the code below to first arrange by number of `streams`, and then select `country` and `artist`
+
+```{python}
+# combine select and arrange (what happens when try to arrange column that's selected out);
+# (cont.) have comment out select, why does it work now?
+(music_top200
+  >> ___
+  >> ___
+)
+```
+
+## Filter: one condition
+
+TODO: fill in explanation
+
+```{python}
+(music_top200
+  >> filter(_.country == "Hong Kong")
+)
+```
+
+
+### Exercise 1: when code goes wrong
+
+Why do you think this code returned 0 rows? Make the changes needed to get data back.
+
+Hint: put a comment on the filter line to check the full data.
+
+```{python}
+(music_top200
+  >> filter(_.country == "United States of America")
+)
+```
+
+## Filter: two conditions
+
+```{python}
+(music_top200
+  >> filter(_.artist == "Roddy Ricch", _.position < 10)
+)
+```
+
+
+### Exercise 1: looking at The Weeknd's streams
+
+How many times has The Weeknd had over 1,000,000 streams? Be sure to include `music_top200` on the first line.
+
+<details>
+    <summary>Hint:</summary>
+    Do in steps. Run first to get all rows where the artist is The Weeknd, and then modify your code to get where he has over 1,000,000 streams.
+</details>
+
+```{python}
+(
+
+)
+
+```
+
+## Mutate
+
+TODO: fill in explanation
+
+```{python}
+(music_top200
+  >> mutate(streamed_ms = _.streams * _.duration_ms)
+)
+```
+
+
+### Exercise 1 TODO: 
+
+Use the code above, and modify it find the longest streamed (`streamed_ms`) song in Canada. Is it the song in the first `position`?
+
+```{python}
+(
+
+)
+```
+
+## Putting it together
+
+TODO: explain
+
+
+```{python}
+(music_top200 
+  >> filter(_.position == 1)
+  >> select(_.country, _.energy, _.acousticness) 
+  >> ggplot(aes("energy", "acousticness")) + geom_point()
+)
+```
+
+
+```{python}
+# TODO: don't include hours, introduce a lot of baggage
+#hours = 3600*1000 
+
+(music_top200
+  >> filter(_.country == "Hong Kong")
+  >> mutate(stream_ms = _.streams * _.duration_ms)
+#  >> mutate(stream_hours = (_.streams * _.duration_ms) / hours)
+  >> select(_.stream_ms, _.position, _.acousticness, _.energy)
+  >> ggplot(aes("stream_ms", "position")) + geom_point()
+)
+```
+
+
+## Exercises
+
+* What is Argentina's 10th most popular song? What's their most danceable song?
+  (future note: we can't filter eg 10th most danceable yet)
+* TODO: add more
+
+
+Advanced
+
+* Notice how we could filter songs in the 5th most streamed position, but not the 5th most danceable. (Show row_number called directly on Series, invite to put into mutate)
+
+
