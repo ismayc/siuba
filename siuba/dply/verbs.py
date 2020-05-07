@@ -985,14 +985,34 @@ def unnest(__data, key = "data"):
         df >> unnest()
         
     """
+    
+    if not len(__data):
+        return __data
+
     # TODO: currently only takes key, not expressions
+    var_list = var_create(key)
+    od = var_select(__data.columns, *var_list)
+
+    if len(od) != 1:
+        raise ValueError(
+                "Can currently only unnest a single column, "
+                "but received selection: %s" % list(od)
+                )
+    else:
+        key = list(od)[0]
+
+    # the explode method works on list-likes, so try that first
+    if isinstance(__data[key].iloc[0], (tuple, list)):
+        # TODO: need to go to first not na value
+        return __data.explode(key)
+
     nrows_nested = __data[key].apply(len, convert_dtype = True)
     indx_nested = nrows_nested.index.repeat(nrows_nested)
 
     grp_keys = list(__data.columns[__data.columns != key])
 
     # flatten nested data
-    data_entries = map(_convert_nested_entry, __data[key])
+    data_entries = iter(__data[key])
     long_data = pd.concat(data_entries, ignore_index = True)
     long_data.name = key
 

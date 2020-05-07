@@ -151,7 +151,7 @@ def test_unnest_lists():
     out = unnest(df)
     assert_frame_equal(
             out,
-            pd.DataFrame({'id': [1,2,2], 'data': ['a','x','y']})
+            pd.DataFrame({'id': [1,2,2], 'data': ['a','x','y']}, index = [0,1,1])
             )
 
 
